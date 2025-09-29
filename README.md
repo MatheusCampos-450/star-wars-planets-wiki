@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Star Wars Planets Wiki
 
-## Getting Started
+Uma aplicação web simples e responsiva para pesquisar e aprender sobre os planetas do universo de Star Wars.
 
-First, run the development server:
+## Sobre o Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Este projeto é uma aplicação web construída com Next.js que permite aos usuários pesquisar por planetas da saga Star Wars. Ele exibe informações detalhadas de cada planeta, incluindo população, clima, terreno e os filmes em que apareceu.
+
+O objetivo principal é fornecer uma interface rápida, moderna e amigável, utilizando uma arquitetura robusta e escalável.
+
+## Tecnologias Utilizadas
+
+Aqui estão as principais tecnologias e bibliotecas usadas no projeto:
+
+*   **[Next.js](https://nextjs.org/)** - Framework React para renderização no servidor e geração de sites estáticos.
+*   **[React](https://reactjs.org/)** - Biblioteca JavaScript para construir interfaces de usuário.
+*   **[TypeScript](https://www.typescriptlang.org/)** - Superset de JavaScript que adiciona tipagem estática.
+*   **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS utility-first para desenvolvimento rápido de UI.
+*   **[TanStack Query](https://tanstack.com/query/latest)** - Biblioteca para data fetching, cache e gerenciamento de estado.
+*   **[InversifyJS](https://inversify.io/)** - Um contêiner de inversão de controle (IoC) leve e poderoso para TypeScript.
+*   **[Axios](https://axios-http.com/)** - Cliente HTTP baseado em Promises para o navegador e Node.js.
+*   **[ESLint](https://eslint.org/)** - Ferramenta de linting para identificar e relatar padrões em JavaScript.
+*   **[Prettier](https://prettier.io/)** - Formatador de código opinativo.
+
+## Como Rodar o Projeto
+
+Para obter uma cópia local e executá-la, siga estes passos.
+
+### Pré-requisitos
+
+Certifique-se de ter o seguinte instalado:
+
+*   Node.js (v20 ou superior)
+*   Yarn (v1.22 ou superior)
+
+### Instalação e Execução
+
+1.  Clone o repositório (substitua pela URL do seu repositório):
+    ```sh
+    git clone https://github.com/seu-usuario/star-wars-planets-wiki.git
+    ```
+2.  Navegue até o diretório do projeto:
+    ```sh
+    cd star-wars-planets-wiki
+    ```
+3.  Instale as dependências:
+    ```sh
+    yarn install
+    ```
+4.  Execute o servidor de desenvolvimento:
+    ```sh
+    yarn dev
+    ```
+5.  Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
+
+## Padrões de Projeto
+
+Este projeto foi desenvolvido com foco em separação de responsabilidades, escalabilidade e manutenibilidade, seguindo princípios de **Arquitetura Limpa (Clean Architecture)**.
+
+*   **Domain-Driven Design (DDD):** O núcleo da aplicação (`@core/domain`) é modelado em torno do domínio de negócio, com entidades como `Planet`, `Film` e `People`.
+*   **Arquitetura Hexagonal (Ports and Adapters):** A aplicação é estruturada para isolar a lógica de negócio de fatores externos.
+    *   **Ports:** As interfaces (gateways) são definidas na camada de domínio (ex: `PlanetGateway`).
+    *   **Adapters:** As implementações concretas das portas ficam na camada de infraestrutura (`@core/infra`), como o `PlanetHttpGateway`, que se comunica com a API externa.
+*   **Use Cases (Interactors):** As operações de negócio são encapsuladas em casos de uso na camada de aplicação (`@core/application`), como o `GetPlanetUseCase`. Isso define claramente todas as interações possíveis com o sistema.
+*   **Injeção de Dependência (DI):** Utilizamos o **InversifyJS** como um contêiner de Inversão de Controle (IoC) para gerenciar as dependências entre as camadas. Isso promove o baixo acoplamento e facilita os testes e a manutenção. A configuração do contêiner está em `@core/infra/container-registry.ts`.
+*   **Princípios de Atomic Design:** Os componentes de UI em `src/shared/components/ui` são construídos como pequenos "átomos" reutilizáveis (ex: `Button`, `Card`, `Input`), que são compostos para formar organismos e páginas mais complexas.
+
+## Arquitetura e Organização de Pastas
+
+O projeto é estruturado para refletir os princípios da Arquitetura Limpa, separando o código em camadas independentes para garantir um sistema desacoplado, testável e de fácil manutenção.
+
+Abaixo está uma visão geral da organização das pastas principais:
+
+```
+/src
+├── @core/
+│   ├── application/  # Camada de Casos de Uso
+│   ├── domain/       # Camada de Domínio
+│   └── infra/        # Camada de Infraestrutura
+├── app/              # Camada de Apresentação (Next.js App Router)
+└── shared/           # Módulos e componentes compartilhados
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### `@core`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Esta é a pasta mais importante, contendo toda a lógica de negócio da aplicação, completamente independente do framework (Next.js) e de qualquer agente externo (APIs, etc.).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+*   `@core/domain`: Contém as entidades de negócio (`Planet`, `Film`) e as interfaces (Ports) que definem os contratos para a camada de infraestrutura, como os `gateways`. Esta camada não tem dependências externas.
 
-## Learn More
+*   `@core/application`: Orquestra o fluxo de dados e executa as regras de negócio. Contém os Casos de Uso (Use Cases/Interactors), como `GetPlanetUseCase`, que são chamados pela camada de apresentação.
 
-To learn more about Next.js, take a look at the following resources:
+*   `@core/infra`: Implementa os detalhes técnicos e as adaptações para o mundo exterior. Aqui ficam as implementações concretas dos `gateways` (Adapters), como o `PlanetHttpGateway` que busca dados de uma API externa, e a configuração do contêiner de injeção de dependência.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### `app`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Esta é a camada de apresentação, responsável pela interface do usuário. Utiliza o App Router do Next.js. As páginas e componentes nesta camada consomem os casos de uso definidos em `@core/application` para exibir dados e interagir com o sistema.
 
-## Deploy on Vercel
+### `shared`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Esta pasta contém código que é reutilizado em diferentes partes da aplicação, mas que não faz parte da lógica de negócio principal.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   `components/ui`: Componentes de UI reutilizáveis e de baixo nível (ex: `Button`, `Card`), seguindo princípios de Atomic Design.
+*   `hooks`: Hooks customizados do React (ex: `useMediaQuery`).
+*   `utils`: Funções utilitárias genéricas.
+*   `flows`: Componentes mais complexos que representam fluxos de usuário ou páginas inteiras (ex: `Home`, `Planet`).
