@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from 'react';
 
 import ChevronBottom from '../Icons/ChevronBottom';
-import { OptionProps, SelectProps } from './tyles';
+import { SelectProps } from './tyles';
 
-export default function Select({ onSelect, options, label }: SelectProps) {
+export default function Select({
+  onSelect,
+  options,
+  label,
+  selectedOption,
+}: SelectProps) {
   const [isOpenState, setIsOpenState] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<OptionProps | null>(
-    null,
-  );
 
   const selectRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +58,6 @@ export default function Select({ onSelect, options, label }: SelectProps) {
               className="px-xxxs font-lato w-full cursor-pointer bg-white py-[.125rem] text-black hover:font-medium"
               onClick={() => {
                 onSelect(option);
-                setSelectedOption(option);
                 handleClose();
               }}
             >

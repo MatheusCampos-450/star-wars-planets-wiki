@@ -1,8 +1,7 @@
-import creativeMarsImage from '@/shared/assets/creative-mars-collage.jpg';
-
 import HeaderPage from '@/shared/components/layout/HeaderPage';
 import { Typography } from '@/shared/components/ui/Typography';
 
+import ImageSection from './components/ImageSection';
 import SearchPlanets from './components/SearchPlanets';
 
 function Home() {
@@ -12,12 +11,7 @@ function Home() {
         <HeaderPage />
 
         <section className="flex h-fit w-full flex-col rounded-[.625rem] bg-black/50 md:h-[25.125rem] md:flex-row">
-          <div
-            style={{
-              backgroundImage: `url(${creativeMarsImage.src})`,
-            }}
-            className={`h-[11.75rem] w-full rounded-[.625rem] bg-cover bg-center bg-no-repeat md:h-full md:w-[50%]`}
-          />
+          <ImageSection />
 
           <div className="p-md md:p-xl flex h-fit w-full flex-col items-center justify-center md:h-full md:w-[50%]">
             <Typography

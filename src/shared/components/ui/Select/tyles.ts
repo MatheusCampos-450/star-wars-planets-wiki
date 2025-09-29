@@ -4,6 +4,7 @@ export interface OptionProps<T = string> {
 }
 
 export interface SelectProps {
+  selectedOption: OptionProps;
   label: string;
   options: OptionProps[];
   onSelect: (option: OptionProps) => void;

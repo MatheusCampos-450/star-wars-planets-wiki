@@ -14,24 +14,23 @@ export function filterBy<T>(
   }
 
   return array.filter((item) => {
-    const value = item[key];
+    const value = Number(item[key]);
 
-    if (
-      typeof value !== 'number' ||
-      isNaN(value) ||
-      value === null ||
-      value === undefined
-    ) {
+    console.log(Number(value));
+
+    if (isNaN(value) || value === null || value === undefined) {
       return false;
     }
 
+    console.log(Number(value));
+
     switch (operator) {
       case 'less':
-        return value < threshold;
+        return Number(value) < threshold;
       case 'equal':
-        return value === threshold;
+        return Number(value) === threshold;
       case 'greater':
-        return value > threshold;
+        return Number(value) > threshold;
       default:
         return false;
     }

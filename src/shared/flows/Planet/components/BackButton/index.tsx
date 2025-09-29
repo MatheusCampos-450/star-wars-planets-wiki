@@ -11,7 +11,7 @@ export default function BackButton() {
 
   return (
     <button
-      className="gap-xs ml-auto flex cursor-pointer items-center justify-center pt-[6.75rem]"
+      className="gap-xs ml-auto flex cursor-pointer items-center justify-center pt-[6.75rem] transition-[300ms] ease-in-out hover:translate-x-[-0.125rem]"
       onClick={handleClick}
       type="button"
     >

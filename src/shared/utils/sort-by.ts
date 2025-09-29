@@ -1,9 +1,9 @@
-type SortOrder = 'asc' | 'desc';
+export type SortOrder = 'ascendent' | 'descendent';
 
 export function sortBy<T>(
   array: T[],
   key: keyof T,
-  order: SortOrder = 'asc',
+  order: SortOrder = 'ascendent',
 ): T[] {
   return [...array].sort((a, b) => {
     const valueA = a[key];
@@ -28,6 +28,6 @@ export function sortBy<T>(
       comparison = strA.localeCompare(strB, undefined, { sensitivity: 'base' });
     }
 
-    return order === 'asc' ? comparison : comparison * -1;
+    return order === 'ascendent' ? comparison : comparison * -1;
   });
 }

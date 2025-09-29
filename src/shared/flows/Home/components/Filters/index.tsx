@@ -6,8 +6,18 @@ import { Typography } from '@/shared/components/ui/Typography';
 import { filterStyles } from './styles';
 import { FiltersProps } from './types';
 
-function Filters({ setFilterByPopulation, setSortByName }: FiltersProps) {
+function Filters({
+  setFilterByPopulation,
+  setSortByName,
+  filterByPopulation,
+  sortByName,
+}: FiltersProps) {
   const { filterContainer, filterTextContainer } = filterStyles();
+
+  const handleClearFilters = () => {
+    setFilterByPopulation(null);
+    setSortByName(null);
+  };
 
   return (
     <div className={filterContainer()}>
@@ -23,6 +33,7 @@ function Filters({ setFilterByPopulation, setSortByName }: FiltersProps) {
       </div>
 
       <Select
+        selectedOption={sortByName}
         label="Name"
         onSelect={(option) => setSortByName(option)}
         options={[
@@ -38,6 +49,7 @@ function Filters({ setFilterByPopulation, setSortByName }: FiltersProps) {
       />
 
       <Select
+        selectedOption={filterByPopulation}
         label="Population"
         onSelect={(option) => setFilterByPopulation(option)}
         options={[
@@ -55,6 +67,15 @@ function Filters({ setFilterByPopulation, setSortByName }: FiltersProps) {
           },
         ]}
       />
+
+      {(filterByPopulation !== null || sortByName !== null) && (
+        <button
+          onClick={handleClearFilters}
+          className="px-xxs flex cursor-pointer items-center justify-center rounded-md border border-solid border-white text-white"
+        >
+          Clear
+        </button>
+      )}
     </div>
   );
 }
