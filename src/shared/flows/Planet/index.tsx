@@ -1,4 +1,6 @@
 import HeaderPage from '@/shared/components/layout/HeaderPage';
+import { CardFallback } from '@/shared/components/ui/Card';
+import { Suspense } from 'react';
 import BackButton from './components/BackButton';
 import FilmsCard from './components/FilmsCard';
 import PlanetInfo from './components/PlanetInfo';
@@ -15,9 +17,13 @@ function Planet({ planet }: PlanetProps) {
           <section className="gap-xxs flex h-fit w-full flex-col rounded-[.625rem] bg-white p-[1.5rem]">
             <PlanetInfo planet={planet} />
 
-            <ResidentsCard residents={planet.residents} />
+            <Suspense fallback={<CardFallback />}>
+              <ResidentsCard residents={planet.residents} />
+            </Suspense>
 
-            <FilmsCard films={planet.films} />
+            <Suspense fallback={<CardFallback />}>
+              <FilmsCard films={planet.films} />
+            </Suspense>
           </section>
 
           <BackButton />

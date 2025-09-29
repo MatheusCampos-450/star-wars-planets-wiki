@@ -16,8 +16,6 @@ async function PlanetPage({ params }: PageProps<'/planet/[planetId]'>) {
 
   const planet = await getPlanet(planetId);
 
-  console.log();
-
   return <Planet planet={planet.props} />;
 }
 

@@ -20,3 +20,5 @@ function Card({ icon, title, items }: CardProps) {
 }
 
 export default Card;
+
+export { CardFallback } from './CardFallback';
