@@ -1,4 +1,5 @@
 import { GetPlanetUseCase } from '@/@core/application/planet/get-planet.use-case';
+import { PlanetProps } from '@/@core/domain/entities/planet';
 import { container } from '@/@core/infra/container-registry';
 import { Registry } from '@/@core/infra/registry';
 import Planet from '@/shared/flows/Planet';
@@ -13,10 +14,21 @@ const getPlanet = async (planetId: string) => {
 
 async function PlanetPage({ params }: PageProps<'/planet/[planetId]'>) {
   const { planetId } = await params;
+  let planetData: PlanetProps;
 
-  const planet = await getPlanet(planetId);
+  try {
+    const planet = await getPlanet(planetId);
 
-  return <Planet planet={planet.props} />;
+    planetData = planet.toJSON();
+  } catch (error) {
+    console.error(`ERRO CRÍTICO ao buscar o planeta ${planetId}:`, error);
+
+    throw new Error(
+      'O campo de navegação falhou! Tente um novo Salto no Hiperespaço.',
+    );
+  }
+
+  return <Planet planet={planetData} />;
 }
 
 export default PlanetPage;

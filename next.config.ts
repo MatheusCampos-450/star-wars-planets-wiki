@@ -12,6 +12,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/swapi/:path*',
+        destination: 'https://swapi.py4e.com/api/:path*',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

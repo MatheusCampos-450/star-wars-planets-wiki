@@ -31,12 +31,22 @@ const getFilms = async (films: string[]) => {
     );
   }
 
-  const filmsNames = filmsResponse.map((p) => p.props.title);
+  const filmsNames = filmsResponse.map((p) => p.toJSON().title);
   return filmsNames;
 };
 
 async function FilmsCard({ films }: FilmsCardProps) {
-  const filmsTitles = await getFilms(films);
+  let filmsTitles: string[] = [];
+
+  try {
+    filmsTitles = await getFilms(films);
+  } catch (error) {
+    console.error('ERRO CRÍTICO no FilmsCard:', error);
+
+    throw new Error(
+      'Falha na aquisição de dados de filmes. Tente um novo Salto no Hiperespaço.',
+    );
+  }
 
   return (
     <Card

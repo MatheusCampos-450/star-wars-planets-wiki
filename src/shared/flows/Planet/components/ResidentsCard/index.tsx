@@ -33,13 +33,22 @@ const getResidents = async (residents: string[]) => {
     );
   }
 
-  const residentNames = residentsResponse.map((p) => p.props.name);
+  const residentNames = residentsResponse.map((p) => p.toJSON().name);
   return residentNames;
 };
 
 async function ResidentsCard({ residents }: ResidentsCardProps) {
-  const residentsNames = await getResidents(residents);
+  let residentsNames: string[] = [];
 
+  try {
+    residentsNames = await getResidents(residents);
+  } catch (error) {
+    console.error('ERRO CRÍTICO no ResidentsCard:', error);
+
+    throw new Error(
+      'Falha na aquisição de dados de residentes. Tente um novo Salto no Hiperespaço.',
+    );
+  }
   return (
     <Card icon={<PeopleIcon />} title="Residents" items={residentsNames} />
   );
