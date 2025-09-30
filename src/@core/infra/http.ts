@@ -1,13 +1,9 @@
-// @/core/infra/http.ts
-
 import axios from 'axios';
-
-const VERCEL_URL = process.env.VERCEL_URL;
+const VERCEL_URL =
+  process.env.VERCEL_URL ||
+  process.env.NEXT_PUBLIC_VERCEL_URL ||
+  'star-wars-planets-wiki.vercel.app';
 const NODE_ENV = process.env.NODE_ENV;
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-console.log('VERCEL_URL', VERCEL_URL);
-console.log('NEXT_PUBLIC_API_URL', NEXT_PUBLIC_API_URL);
 
 const isServer = typeof window === 'undefined';
 
