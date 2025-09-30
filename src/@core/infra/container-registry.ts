@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import { Container } from 'inversify';
 import { http } from './http';
 

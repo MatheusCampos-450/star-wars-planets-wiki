@@ -8,7 +8,6 @@ export function useMediaQuery(maxWidth: number): boolean {
 
     const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
 
-    // Set the initial value
     setMatches(mediaQuery.matches);
 
     mediaQuery.addEventListener('change', handler);

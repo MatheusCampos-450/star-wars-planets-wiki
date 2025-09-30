@@ -1,5 +1,7 @@
+import 'reflect-metadata';
 import type { Metadata } from 'next';
 
+import '@/@core/infra/container-registry';
 import Footer from '@/shared/components/layout/Footer';
 import QueryProvider from '@/shared/context/QueryProvider';
 import '../shared/styles/global.css';

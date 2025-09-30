@@ -1,38 +1,36 @@
 import { Planet, PlanetsResponse } from '@/@core/domain/entities/planet';
 import { PlanetGateway } from '@/@core/domain/gateways/planet.gateway';
-import { formatUrl } from '@/shared/utils/format-url';
 import { AxiosInstance } from 'axios';
 
 export class PlanetHttpGateway implements PlanetGateway {
   constructor(private http: AxiosInstance) {}
 
   findAll(search?: string): Promise<Planet[]> {
-    const url = formatUrl({
-      path: '/planets/',
-      params: { search },
-    });
-
-    return this.http.get<PlanetsResponse>(url).then((res) =>
-      res.data.results.map(
-        (data) =>
-          new Planet({
-            climate: data.climate,
-            diameter: data.diameter,
-            gravity: data.gravity,
-            name: data.name,
-            orbital_period: data.orbital_period,
-            population: data.population,
-            residents: data.residents,
-            rotation_period: data.rotation_period,
-            surface_water: data.surface_water,
-            terrain: data.terrain,
-            url: data.url,
-            created: data.created,
-            edited: data.edited,
-            films: data.films,
-          }),
-      ),
-    );
+    return this.http
+      .get<PlanetsResponse>('/planets/', {
+        params: { search },
+      })
+      .then((res) =>
+        res.data.results.map(
+          (data) =>
+            new Planet({
+              climate: data.climate,
+              diameter: data.diameter,
+              gravity: data.gravity,
+              name: data.name,
+              orbital_period: data.orbital_period,
+              population: data.population,
+              residents: data.residents,
+              rotation_period: data.rotation_period,
+              surface_water: data.surface_water,
+              terrain: data.terrain,
+              url: data.url,
+              created: data.created,
+              edited: data.edited,
+              films: data.films,
+            }),
+        ),
+      );
   }
 
   findById(id: string): Promise<Planet> {
