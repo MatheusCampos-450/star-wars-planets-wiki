@@ -16,7 +16,7 @@ const nextConfig = {
     return [
       {
         source: '/api/swapi/:path*',
-        destination: 'https://swapi.py4e.com/api/:path*',
+        destination: 'https://swapi.dev/api/:path*',
       },
     ];
   },
