@@ -1,26 +1,13 @@
 import axios from 'axios';
-const VERCEL_URL =
-  process.env.VERCEL_URL ||
-  process.env.NEXT_PUBLIC_VERCEL_URL ||
-  'star-wars-planets-wiki.vercel.app';
-const NODE_ENV = process.env.NODE_ENV;
 
 const isServer = typeof window === 'undefined';
 
 let baseURL = '/api/swapi/';
 
 if (isServer) {
-  let domain = '';
-
-  if (NODE_ENV === 'development') {
-    domain = 'http://localhost:3000';
-  } else if (VERCEL_URL) {
-    domain = `https://${VERCEL_URL}`;
-  }
-
-  if (domain) {
-    baseURL = `${domain}/api/swapi/`;
-  }
+  baseURL = 'https://swapi.dev/api/';
+} else {
+  baseURL = '/api/swapi/';
 }
 
 const http = axios.create({
