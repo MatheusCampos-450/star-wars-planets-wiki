@@ -1,4 +1,8 @@
-import { Planet, PlanetsResponse } from '@/@core/domain/entities/planet';
+import {
+  Planet,
+  PlanetProps,
+  PlanetsResponse,
+} from '@/@core/domain/entities/planet';
 import { PlanetGateway } from '@/@core/domain/gateways/planet.gateway';
 import { AxiosInstance } from 'axios';
 
@@ -7,7 +11,7 @@ export class PlanetHttpGateway implements PlanetGateway {
 
   findAll(search?: string): Promise<Planet[]> {
     return this.http
-      .get<PlanetsResponse>('/planets/', {
+      .get<PlanetsResponse>('planets/', {
         params: { search },
       })
       .then((res) =>
@@ -34,7 +38,7 @@ export class PlanetHttpGateway implements PlanetGateway {
   }
 
   findById(id: string): Promise<Planet> {
-    return this.http.get<Planet>(`planets/${id}`).then(
+    return this.http.get<PlanetProps>(`planets/${id}/`).then(
       (res) =>
         new Planet({
           climate: res.data.climate,
