@@ -67,6 +67,8 @@ export default function SearchInput({
   };
 
   const handleRedirect = (planetUrl: string) => {
+    console.log(convertPlanetUrl(planetUrl));
+
     setIsOpenResults(false);
     setFilterByPopulation(null);
     setSortByName(null);
