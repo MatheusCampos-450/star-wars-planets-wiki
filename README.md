@@ -9,7 +9,6 @@ Este projeto é uma aplicação web construída com Next.js que permite aos usu�
 O objetivo principal é fornecer uma interface rápida, moderna e amigável, utilizando uma arquitetura robusta e escalável.
 
 https://star-wars-planets-wiki.vercel.app/
-(O projeto está na Vercel, mas está com um bug de redirecionamento que ainda não consegui ajustar! Em local está funcionando normalmente)
 
 ## Tecnologias Utilizadas
 
